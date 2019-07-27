@@ -2,8 +2,10 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
   <title></title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
   <style>
 .l-wrap > div {
   border: 1px solid rgba(0,0,0,0.3);
@@ -15,11 +17,16 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 0.5em;
+  padding: 1em 1em 0;
+}
+.p-nav button {
+  margin-right: 0.5em;
+  margin-bottom: 1em;
 }
   </style>
 </head>
 <body>
+
 <div class="l-wrap">
   <div class="p-top">
     <p class="alert alert-secondary"> .p-top </p>
@@ -30,18 +37,21 @@
   <div class="p-btm">
     <p class="alert alert-secondary"> .p-btm </p>
   </div>
-
 </div>
 
 <nav class="p-nav">
-  <button type="button" class="btn btn-secondary" data-scroll=".p-top">SCROLL .p-top</button>
-  <button type="button" class="btn btn-secondary" data-scroll=".p-mid" data-scroll-header=".p-nav">SCROLL .p-mid</button>
-  <button type="button" class="btn btn-secondary" data-scroll=".p-btm" data-scroll-offset="100">SCROLL .p-btm</button>
+  <button type="button" class="btn btn-secondary" data-scroll=".p-top">.p-top</button>
+  <button type="button" class="btn btn-secondary" data-scroll=".p-btm">.p-btm</button>
+  <button type="button" class="btn btn-secondary" data-scroll=".p-mid" data-scroll-header=".p-nav">.p-mid +.p-nav</button>
+  <button type="button" class="btn btn-secondary" data-scroll=".p-mid" data-scroll-offset="-100">.p-mid -100</button>
+  <button type="button" class="btn btn-secondary" data-scroll=".p-mid" data-scroll-offset="100">.p-mid +100</button>
+  <button type="button" class="btn btn-secondary" onclick="JSM.anime('.p-btm');">JSM.anime('.p-btm');</button>
+  <button type="button" class="btn btn-secondary" onclick="JSM.anime(300);">JSM.anime(300);</button>
 </nav>
 
 <script src="../dist/js-scroll-module.js"></script>
 <script>
-  new SCROLL_MODULE('[data-scroll]');
+  var JSM = new SCROLL_MODULE('[data-scroll]');
 </script>
 
 </body>

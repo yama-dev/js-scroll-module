@@ -46,39 +46,15 @@ export default class SCROLL_MODULE {
 
   attachEvent(){
     DOM.addEvent(this.state.elem_array, 'click', (e)=>{
-      let _elem_target_data = e.currentTarget.getAttribute('data-scroll');
+      let _elem_target_data = e.currentTarget.getAttribute(this.state.elem_selector.replace(/(\[|\])/g,''));
       let _elem_target_data_header = e.currentTarget.getAttribute('data-scroll-header');
-      this.AnimeFunctionPrep(_elem_target_data,_elem_target_data_header);
+      let _elem_target_data_offset = e.currentTarget.getAttribute('data-scroll-offset');
+      this.AnimeFunctionPrep(_elem_target_data, _elem_target_data_header, _elem_target_data_offset);
     });
   }
 
-  AnimeFunctionPrep(target=null,header=null){
-    // 初期化
-    this.state.numCountTop      = 0; // animation, easing 関数内で利用される値
-    this.state.numCountDuration = 0; // animation, easing 関数内で利用される値
-    this.state.num_offset_frame_top = 0; // 対象までの距離を判定
-    this.state.num_offset_header = 0; // ヘッダーの高さを設定
-
-    if(target){
-      this.state.num_offset_frame_top = document.querySelector(target).getBoundingClientRect().top;
-    } else {
-      this.state.num_offset_frame_top = window.pageYOffset * -1;
-    }
-    if(header){
-      this.state.num_offset_header = DOM.selectDom(header)[0].clientHeight;
-    }
-    this.state.numTopDefault = window.pageYOffset;
-    this.state.numTopTarget = this.state.num_offset_frame_top + window.pageYOffset - this.state.num_offset_header;
-
-    // 目標地点と同じ座標の場合は、キャンセル
-    if(this.state.num_offset_frame_top === 0) return false;
-
-    this.AnimeFunction();
-  }
-
-  anime(_elem_target = null){
-    console.log(this);
-    this.AnimeFunctionPrep(_elem_target);
+  anime(target=null,header=null,offset=0){
+    this.AnimeFunctionPrep(target, header, offset);
   }
 
   static easingEaseOutCubic(t, b, c, d) {
@@ -87,11 +63,44 @@ export default class SCROLL_MODULE {
     return c * (t * t * t + 1) + b;
   }
 
+  AnimeFunctionPrep(target=null,header=null,offset=0){
+    // initialize
+    this.state.numCountTop      = 0;     // used value at animation and easing functions.
+    this.state.numCountDuration = 0;     // used value at animation and easing functions.
+    this.state.num_offset_frame_top = 0; // Distance to target.
+
+    if(target){
+      if(typeof target !== 'number'){
+        this.state.num_offset_frame_top = DOM.selectDom(target)[0].getBoundingClientRect().top;
+      } else {
+        this.state.num_offset_frame_top = window.pageYOffset * -1 + target;
+      }
+    } else {
+      this.state.num_offset_frame_top = window.pageYOffset * -1;
+    }
+    if(header){
+      this.state.num_offset_header = DOM.selectDom(header)[0].clientHeight; // header height.
+      this.state.num_offset_frame_top = this.state.num_offset_frame_top - this.state.num_offset_header;
+    }
+    if(offset){
+      this.state.num_offset_frame_top = this.state.num_offset_frame_top - offset;
+    }
+
+    this.state.numTopDefault = window.pageYOffset;
+    this.state.numTopTarget = this.state.num_offset_frame_top + window.pageYOffset;
+
+    // Cancel if the same coordinates as the target point.
+    if(this.state.num_offset_frame_top === 0) return false;
+
+    this.AnimeFunction();
+  }
+
   AnimeFunction(){
     let _that = this;
 
     let startTime = new Date().getTime();
     let loop = ()=>{
+
       _that.instance = window.requestAnimationFrame(loop);
       let currentTime = new Date().getTime();
       let status = (startTime - currentTime);
