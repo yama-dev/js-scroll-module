@@ -16,7 +16,7 @@ It's a scroll utility.
 
 ## Installation,Download
 
-- Standalone(CDN) -> [https://cdn.jsdelivr.net/gh/yama-dev/js-scroll-module@v0.1.0/dist/js-scroll-module.js](https://cdn.jsdelivr.net/gh/yama-dev/js-scroll-module@v0.1.0/dist/js-scroll-module.js)
+- Standalone(CDN) -> [https://cdn.jsdelivr.net/gh/yama-dev/js-scroll-module@v0.2.0/dist/js-scroll-module.js](https://cdn.jsdelivr.net/gh/yama-dev/js-scroll-module@v0.2.0/dist/js-scroll-module.js)
 
 <br>
 
