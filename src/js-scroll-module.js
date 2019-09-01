@@ -53,8 +53,8 @@ export default class SCROLL_MODULE {
     });
   }
 
-  anime(target=null,header=null,offset=0){
-    this.AnimeFunctionPrep(target, header, offset);
+  anime(target=null,header=null,offset=0,duration=null){
+    this.AnimeFunctionPrep(target, header, offset, duration);
   }
 
   static easingEaseOutCubic(t, b, c, d) {
@@ -63,11 +63,13 @@ export default class SCROLL_MODULE {
     return c * (t * t * t + 1) + b;
   }
 
-  AnimeFunctionPrep(target=null,header=null,offset=0){
+  AnimeFunctionPrep(target=null,header=null,offset=0,duration=null){
     // initialize
     this.state.numCountTop      = 0;     // used value at animation and easing functions.
     this.state.numCountDuration = 0;     // used value at animation and easing functions.
     this.state.num_offset_frame_top = 0; // Distance to target.
+
+    if(!duration) duration = this.options.numDuration;
 
     if(target){
       if(typeof target !== 'number'){
