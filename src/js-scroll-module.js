@@ -4,11 +4,11 @@ import JS_DOM from '@yama-dev/js-dom';
 let DOM = new JS_DOM();
 
 export default class SCROLL_MODULE {
-  constructor(target, options){
+  constructor(target, options={}){
     if(!target) return false;
 
     let _options_default = {
-      numDuration : 800
+      duration : 600
     };
 
     this.options = Object.assign(_options_default, options);
@@ -69,7 +69,7 @@ export default class SCROLL_MODULE {
     this.state.numCountDuration = 0;     // used value at animation and easing functions.
     this.state.num_offset_frame_top = 0; // Distance to target.
 
-    if(!duration) duration = this.options.numDuration;
+    if(!duration) duration = this.options.duration;
 
     if(target){
       if(typeof target !== 'number'){
@@ -114,7 +114,7 @@ export default class SCROLL_MODULE {
         this.state.numCountDuration,
         this.state.numTopDefault,
         (this.state.numTopTarget - this.state.numTopDefault),
-        this.options.numDuration
+        this.options.duration
       );
 
       // Update position.
