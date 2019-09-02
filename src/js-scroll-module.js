@@ -8,7 +8,8 @@ export default class SCROLL_MODULE {
     if(!target) return false;
 
     let _options_default = {
-      duration : 600
+      duration : 600,
+      easing: SCROLL_MODULE.easingEaseOutCubic
     };
 
     this.options = Object.assign(_options_default, options);
@@ -31,30 +32,30 @@ export default class SCROLL_MODULE {
       elem_array: DOM.selectDom(target)
     };
 
-    this.SetModule();
+    this._setModule();
   }
 
-  SetModule(){
+  _setModule(){
     if(document.readyState == 'complete' || document.readyState == 'interactive'){
-      this.attachEvent();
+      this._attachEvent();
     } else {
       document.addEventListener('DOMContentLoaded', () => {
-        this.attachEvent();
+        this._attachEvent();
       });
     }
   }
 
-  attachEvent(){
+  _attachEvent(){
     DOM.addEvent(this.state.elem_array, 'click', (e)=>{
       let _elem_target_data = e.currentTarget.getAttribute(this.state.elem_selector.replace(/(\[|\])/g,''));
       let _elem_target_data_header = e.currentTarget.getAttribute('data-scroll-header');
       let _elem_target_data_offset = e.currentTarget.getAttribute('data-scroll-offset');
-      this.AnimeFunctionPrep(_elem_target_data, _elem_target_data_header, _elem_target_data_offset);
+      this._animeFunctionPrep(_elem_target_data, _elem_target_data_header, _elem_target_data_offset);
     });
   }
 
   anime(target=null,header=null,offset=0,duration=null){
-    this.AnimeFunctionPrep(target, header, offset, duration);
+    this._animeFunctionPrep(target, header, offset, duration);
   }
 
   static easingEaseOutCubic(t, b, c, d) {
@@ -63,7 +64,7 @@ export default class SCROLL_MODULE {
     return c * (t * t * t + 1) + b;
   }
 
-  AnimeFunctionPrep(target=null,header=null,offset=0,duration=null){
+  _animeFunctionPrep(target=null,header=null,offset=0,duration=null){
     // initialize
     this.state.numCountTop      = 0;     // used value at animation and easing functions.
     this.state.numCountDuration = 0;     // used value at animation and easing functions.
@@ -94,10 +95,10 @@ export default class SCROLL_MODULE {
     // Cancel if the same coordinates as the target point.
     if(this.state.num_offset_frame_top === 0) return false;
 
-    this.AnimeFunction();
+    this._animeFunction(duration);
   }
 
-  AnimeFunction(){
+  _animeFunction(duration){
     let _that = this;
 
     let startTime = new Date().getTime();
@@ -110,11 +111,11 @@ export default class SCROLL_MODULE {
       this.state.numCountDuration = this.state.numCountDuration + Math.abs(status);
 
       // Update top position.
-      this.state.numCountTop = SCROLL_MODULE.easingEaseOutCubic(
+      this.state.numCountTop = this.options.easing(
         this.state.numCountDuration,
         this.state.numTopDefault,
         (this.state.numTopTarget - this.state.numTopDefault),
-        this.options.duration
+        duration
       );
 
       // Update position.
