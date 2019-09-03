@@ -4,11 +4,17 @@ import JS_DOM from '@yama-dev/js-dom';
 let DOM = new JS_DOM();
 
 export default class SCROLL_MODULE {
-  constructor(target, options){
+  constructor(target, options={}){
     if(!target) return false;
 
     let _options_default = {
-      numDuration : 800
+      duration : 600,
+      easing: SCROLL_MODULE.easingEaseOutCubic,
+      trueFunction: function(){
+        if(window.innerWidth <= 765){
+          return true;
+        }
+      }
     };
 
     this.options = Object.assign(_options_default, options);
@@ -31,30 +37,31 @@ export default class SCROLL_MODULE {
       elem_array: DOM.selectDom(target)
     };
 
-    this.SetModule();
+    this._setModule();
   }
 
-  SetModule(){
+  _setModule(){
     if(document.readyState == 'complete' || document.readyState == 'interactive'){
-      this.attachEvent();
+      this._attachEvent();
     } else {
       document.addEventListener('DOMContentLoaded', () => {
-        this.attachEvent();
+        this._attachEvent();
       });
     }
   }
 
-  attachEvent(){
+  _attachEvent(){
     DOM.addEvent(this.state.elem_array, 'click', (e)=>{
       let _elem_target_data = e.currentTarget.getAttribute(this.state.elem_selector.replace(/(\[|\])/g,''));
       let _elem_target_data_header = e.currentTarget.getAttribute('data-scroll-header');
       let _elem_target_data_offset = e.currentTarget.getAttribute('data-scroll-offset');
-      this.AnimeFunctionPrep(_elem_target_data, _elem_target_data_header, _elem_target_data_offset);
+      let _elem_target_data_true_offset = e.currentTarget.getAttribute('data-scroll-true-offset');
+      this._animeFunctionPrep(_elem_target_data, _elem_target_data_header, _elem_target_data_offset, _elem_target_data_true_offset);
     });
   }
 
-  anime(target=null,header=null,offset=0){
-    this.AnimeFunctionPrep(target, header, offset);
+  anime(target=null,header=null,offset=0,trueOffset=null,duration=null){
+    this._animeFunctionPrep(target, header, offset, trueOffset, duration);
   }
 
   static easingEaseOutCubic(t, b, c, d) {
@@ -63,12 +70,15 @@ export default class SCROLL_MODULE {
     return c * (t * t * t + 1) + b;
   }
 
-  AnimeFunctionPrep(target=null,header=null,offset=0){
+  _animeFunctionPrep(target=null,header=null,offset=0,trueOffset=null,duration=null){
     // initialize
     this.state.numCountTop      = 0;     // used value at animation and easing functions.
     this.state.numCountDuration = 0;     // used value at animation and easing functions.
     this.state.num_offset_frame_top = 0; // Distance to target.
 
+    if(!duration) duration = this.options.duration;
+
+    // Set target position.
     if(target){
       if(typeof target !== 'number'){
         this.state.num_offset_frame_top = DOM.selectDom(target)[0].getBoundingClientRect().top;
@@ -78,12 +88,23 @@ export default class SCROLL_MODULE {
     } else {
       this.state.num_offset_frame_top = window.pageYOffset * -1;
     }
+
+    // Set header height.
     if(header){
       this.state.num_offset_header = DOM.selectDom(header)[0].clientHeight; // header height.
       this.state.num_offset_frame_top = this.state.num_offset_frame_top - this.state.num_offset_header;
     }
+
+    // Set offset height.
     if(offset){
       this.state.num_offset_frame_top = this.state.num_offset_frame_top - offset;
+    }
+
+    // Set true-offset height.
+    if(trueOffset){
+      if(this.options.trueFunction()){
+        this.state.num_offset_frame_top = this.state.num_offset_frame_top - Number(trueOffset);
+      }
     }
 
     this.state.numTopDefault = window.pageYOffset;
@@ -92,10 +113,10 @@ export default class SCROLL_MODULE {
     // Cancel if the same coordinates as the target point.
     if(this.state.num_offset_frame_top === 0) return false;
 
-    this.AnimeFunction();
+    this._animeFunction(duration);
   }
 
-  AnimeFunction(){
+  _animeFunction(duration){
     let _that = this;
 
     let startTime = new Date().getTime();
@@ -108,11 +129,11 @@ export default class SCROLL_MODULE {
       this.state.numCountDuration = this.state.numCountDuration + Math.abs(status);
 
       // Update top position.
-      this.state.numCountTop = SCROLL_MODULE.easingEaseOutCubic(
+      this.state.numCountTop = this.options.easing(
         this.state.numCountDuration,
         this.state.numTopDefault,
         (this.state.numTopTarget - this.state.numTopDefault),
-        this.options.numDuration
+        duration
       );
 
       // Update position.
