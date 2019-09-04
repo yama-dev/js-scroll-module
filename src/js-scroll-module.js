@@ -8,7 +8,7 @@ export default class SCROLL_MODULE {
 
     let _options_default = {
       duration : 600,
-      easing: SCROLL_MODULE.easingEaseOutCubic,
+      easing: SCROLL_MODULE.easeOutQuart,
       trueFunction: function(){
         if(window.innerWidth <= 765){
           return true;
@@ -61,12 +61,6 @@ export default class SCROLL_MODULE {
 
   anime(target=null,header=null,offset=0,trueOffset=null,duration=null){
     this._animeFunctionPrep(target, header, offset, trueOffset, duration);
-  }
-
-  static easingEaseOutCubic(t, b, c, d) {
-    t /= d;
-    t--;
-    return c * (t * t * t + 1) + b;
   }
 
   _animeFunctionPrep(target=null,header=null,offset=0,trueOffset=null,duration=null){
@@ -148,4 +142,14 @@ export default class SCROLL_MODULE {
     };
     loop();
   }
+  static easeOutQuart(elapsed, initialValue, amountOfChange, duration){
+    return -amountOfChange * ((elapsed = elapsed / duration - 1) * elapsed * elapsed * elapsed - 1) + initialValue;
+  }
+
+  static easeOutCubic(t, b, c, d) {
+    t /= d;
+    t--;
+    return c * (t * t * t + 1) + b;
+  }
+
 }
