@@ -110,16 +110,14 @@ export default class SCROLL_MODULE {
   }
 
   _animeFunction(duration){
-    let _that = this;
-
     let startTime = new Date().getTime();
     let loop = ()=>{
 
-      _that.instance = window.requestAnimationFrame(loop);
+      this.instance = window.requestAnimationFrame(loop);
       let currentTime = new Date().getTime();
       let status = (startTime - currentTime);
 
-      this.state.numCountDuration = this.state.numCountDuration + Math.abs(status);
+      this.state.numCountDuration = Math.abs(status);
 
       // Update top position.
       this.state.numCountTop = this.options.easing(
@@ -132,13 +130,12 @@ export default class SCROLL_MODULE {
       // Update position.
       window.scrollTo(0, this.state.numCountTop);
 
-      if(_that.state.num_offset_frame_top > 0){
-        if (this.state.numCountTop >= this.state.numTopTarget)  window.cancelAnimationFrame(_that.instance);
+      if(this.state.num_offset_frame_top > 0){
+        if(this.state.numCountTop >= this.state.numTopTarget)  window.cancelAnimationFrame(this.instance);
       } else {
-        if (this.state.numCountTop <= this.state.numTopTarget)  window.cancelAnimationFrame(_that.instance);
+        if (this.state.numCountTop <= this.state.numTopTarget)  window.cancelAnimationFrame(this.instance);
       }
 
-      startTime = new Date().getTime();
     };
     loop();
   }
