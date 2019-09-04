@@ -136,6 +136,9 @@ export default class SCROLL_MODULE {
         if (this.state.numCountTop <= this.state.numTopTarget)  window.cancelAnimationFrame(this.instance);
       }
 
+      if(duration <= this.state.numCountDuration){
+        window.cancelAnimationFrame(this.instance);
+      }
     };
     loop();
   }
