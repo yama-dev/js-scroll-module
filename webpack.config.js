@@ -45,7 +45,7 @@ const config = {
       },
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: /node_modules[//\/](?!(@yama\-dev)\/).*/,
         use: {
           loader: 'babel-loader',
           options: {

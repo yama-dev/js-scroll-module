@@ -1,7 +1,6 @@
 /*eslint no-console: 1*/
 
-import JS_DOM from '@yama-dev/js-dom';
-let DOM = new JS_DOM();
+import * as DOM from '@yama-dev/js-dom/core/';
 
 export default class SCROLL_MODULE {
   constructor(target, options={}){
@@ -9,7 +8,7 @@ export default class SCROLL_MODULE {
 
     let _options_default = {
       duration : 600,
-      easing: SCROLL_MODULE.easingEaseOutCubic,
+      easing: SCROLL_MODULE.easeOutQuart,
       trueFunction: function(){
         if(window.innerWidth <= 765){
           return true;
@@ -56,21 +55,13 @@ export default class SCROLL_MODULE {
       let _elem_target_data_header = e.currentTarget.getAttribute('data-scroll-header');
       let _elem_target_data_offset = e.currentTarget.getAttribute('data-scroll-offset');
       let _elem_target_data_true_offset = e.currentTarget.getAttribute('data-scroll-true-offset');
-      this._animeFunctionPrep(_elem_target_data, _elem_target_data_header, _elem_target_data_offset, _elem_target_data_true_offset);
+      this._animeFunctionPrep(_elem_target_data, null, _elem_target_data_header, _elem_target_data_offset, _elem_target_data_true_offset);
     });
   }
 
-  anime(target=null,header=null,offset=0,trueOffset=null,duration=null){
-    this._animeFunctionPrep(target, header, offset, trueOffset, duration);
-  }
+  _animeFunctionPrep(target=null, duration=null, header=null, offset=0, trueOffset=null){
+    if(this.instance) window.cancelAnimationFrame(this.instance);
 
-  static easingEaseOutCubic(t, b, c, d) {
-    t /= d;
-    t--;
-    return c * (t * t * t + 1) + b;
-  }
-
-  _animeFunctionPrep(target=null,header=null,offset=0,trueOffset=null,duration=null){
     // initialize
     this.state.numCountTop      = 0;     // used value at animation and easing functions.
     this.state.numCountDuration = 0;     // used value at animation and easing functions.
@@ -117,16 +108,14 @@ export default class SCROLL_MODULE {
   }
 
   _animeFunction(duration){
-    let _that = this;
-
     let startTime = new Date().getTime();
     let loop = ()=>{
 
-      _that.instance = window.requestAnimationFrame(loop);
+      this.instance = window.requestAnimationFrame(loop);
       let currentTime = new Date().getTime();
       let status = (startTime - currentTime);
 
-      this.state.numCountDuration = this.state.numCountDuration + Math.abs(status);
+      this.state.numCountDuration = Math.abs(status);
 
       // Update top position.
       this.state.numCountTop = this.options.easing(
@@ -139,14 +128,31 @@ export default class SCROLL_MODULE {
       // Update position.
       window.scrollTo(0, this.state.numCountTop);
 
-      if(_that.state.num_offset_frame_top > 0){
-        if (this.state.numCountTop >= this.state.numTopTarget)  window.cancelAnimationFrame(_that.instance);
+      if(this.state.num_offset_frame_top > 0){
+        if(this.state.numCountTop >= this.state.numTopTarget)  window.cancelAnimationFrame(this.instance);
       } else {
-        if (this.state.numCountTop <= this.state.numTopTarget)  window.cancelAnimationFrame(_that.instance);
+        if (this.state.numCountTop <= this.state.numTopTarget)  window.cancelAnimationFrame(this.instance);
       }
 
-      startTime = new Date().getTime();
+      if(duration <= this.state.numCountDuration){
+        window.cancelAnimationFrame(this.instance);
+      }
     };
     loop();
   }
+
+  anime(target=null,duration=null,header=null,offset=0,trueOffset=null){
+    this._animeFunctionPrep(target, duration, header, offset, trueOffset);
+  }
+
+  static easeOutQuart(elapsed, initialValue, amountOfChange, duration){
+    return -amountOfChange * ((elapsed = elapsed / duration - 1) * elapsed * elapsed * elapsed - 1) + initialValue;
+  }
+
+  static easeOutCubic(t, b, c, d) {
+    t /= d;
+    t--;
+    return c * (t * t * t + 1) + b;
+  }
+
 }
