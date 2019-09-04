@@ -55,15 +55,13 @@ export default class SCROLL_MODULE {
       let _elem_target_data_header = e.currentTarget.getAttribute('data-scroll-header');
       let _elem_target_data_offset = e.currentTarget.getAttribute('data-scroll-offset');
       let _elem_target_data_true_offset = e.currentTarget.getAttribute('data-scroll-true-offset');
-      this._animeFunctionPrep(_elem_target_data, _elem_target_data_header, _elem_target_data_offset, _elem_target_data_true_offset);
+      this._animeFunctionPrep(_elem_target_data, null, _elem_target_data_header, _elem_target_data_offset, _elem_target_data_true_offset);
     });
   }
 
-  anime(target=null,header=null,offset=0,trueOffset=null,duration=null){
-    this._animeFunctionPrep(target, header, offset, trueOffset, duration);
-  }
+  _animeFunctionPrep(target=null, duration=null, header=null, offset=0, trueOffset=null){
+    if(this.instance) window.cancelAnimationFrame(this.instance);
 
-  _animeFunctionPrep(target=null,header=null,offset=0,trueOffset=null,duration=null){
     // initialize
     this.state.numCountTop      = 0;     // used value at animation and easing functions.
     this.state.numCountDuration = 0;     // used value at animation and easing functions.
@@ -142,6 +140,11 @@ export default class SCROLL_MODULE {
     };
     loop();
   }
+
+  anime(target=null,duration=null,header=null,offset=0,trueOffset=null){
+    this._animeFunctionPrep(target, duration, header, offset, trueOffset);
+  }
+
   static easeOutQuart(elapsed, initialValue, amountOfChange, duration){
     return -amountOfChange * ((elapsed = elapsed / duration - 1) * elapsed * elapsed * elapsed - 1) + initialValue;
   }
