@@ -25,14 +25,16 @@ const babelPlugin = [
   '@babel/plugin-transform-object-assign'
 ];
 
+const TerserPlugin = require('terser-webpack-plugin');
+
 const config = {
   mode: env || 'development',
-  entry: ['./src/js-scroll-module.js'],
+  entry: {
+    'js-scroll-module': './src/js-scroll-module.js',
+  },
   output: {
     path: `${__dirname}/dist`,
-    filename: 'js-scroll-module.js',
-    library: 'SCROLL_MODULE',
-    libraryExport: 'default',
+    filename: '[name].js',
     libraryTarget: 'umd'
   },
   module: {
@@ -62,6 +64,18 @@ const config = {
         }
       }
     ]
+  },
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          compress: {
+            drop_console: true,
+          },
+          mangle: true
+        },
+      })
+    ],
   },
   plugins: [
     webpackPlugEnv,

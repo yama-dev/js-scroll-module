@@ -2,7 +2,7 @@
 
 import * as DOM from '@yama-dev/js-dom/core/';
 
-export default class SCROLL_MODULE {
+export class SCROLL_MODULE {
   constructor(target, options={}){
     if(!target) return false;
 
