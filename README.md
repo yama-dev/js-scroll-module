@@ -16,7 +16,7 @@ It's a scroll utility.
 
 ## Installation,Download
 
-- Standalone(CDN) -> [https://cdn.jsdelivr.net/gh/yama-dev/js-scroll-module@v0.3.0/dist/js-scroll-module.js](https://cdn.jsdelivr.net/gh/yama-dev/js-scroll-module@v0.3.0/dist/js-scroll-module.js)
+- Standalone(CDN) -> [https://cdn.jsdelivr.net/gh/yama-dev/js-scroll-module@v0.3.1/dist/js-scroll-module.js](https://cdn.jsdelivr.net/gh/yama-dev/js-scroll-module@v0.3.1/dist/js-scroll-module.js)
 
 <br>
 
@@ -66,8 +66,9 @@ SCROLL_MODULE.anime('.target',3000);
 <script>
   var JSM = new SCROLL_MODULE('[data-scroll]', {
     duration: 500,
+    easing: SCROLL_MODULE.easeOutQuart,
+    // data-scroll-true-offset=""
     trueFunction: function(){
-      // data-scroll-true-offset=""
       if(window.innerWidth <= 765){
         return true;
       }
