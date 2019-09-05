@@ -25,6 +25,8 @@ const babelPlugin = [
   '@babel/plugin-transform-object-assign'
 ];
 
+const TerserPlugin = require('terser-webpack-plugin');
+
 const config = {
   mode: env || 'development',
   entry: {
@@ -62,6 +64,18 @@ const config = {
         }
       }
     ]
+  },
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          compress: {
+            drop_console: true,
+          },
+          mangle: true
+        },
+      })
+    ],
   },
   plugins: [
     webpackPlugEnv,
