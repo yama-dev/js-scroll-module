@@ -145,8 +145,8 @@ export class SCROLL_MODULE {
     this._animeFunctionPrep(target, duration, header, offset, trueOffset);
   }
 
-  static easeOutQuart(elapsed, initialValue, amountOfChange, duration){
-    return -amountOfChange * ((elapsed = elapsed / duration - 1) * elapsed * elapsed * elapsed - 1) + initialValue;
+  static easeOutQuart(t, b, c, d){
+    return -c * ((t = t / d - 1) * t * t * t - 1) + b;
   }
 
   static easeOutCubic(t, b, c, d) {
