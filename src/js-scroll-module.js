@@ -51,7 +51,7 @@ export class SCROLL_MODULE {
 
   _attachEvent(){
     DOM.addEvent(this.state.elem_array, 'click', (e)=>{
-      let _elem_target_data = e.currentTarget.getAttribute(this.state.elem_selector.replace(/(\[|\])/g,''));
+      let _elem_target_data = e.currentTarget.getAttribute(this.state.elem_selector.replace(/(\[|\]|\^|=|"|#)/g,''));
       let _elem_target_data_header = e.currentTarget.getAttribute('data-scroll-header');
       let _elem_target_data_offset = e.currentTarget.getAttribute('data-scroll-offset');
       let _elem_target_data_true_offset = e.currentTarget.getAttribute('data-scroll-true-offset');
