@@ -1,7 +1,7 @@
 /*!
  * JS SCROLL MODULE (JavaScript Library)
  *   @yama-dev/js-scroll-module
- * Version 0.3.2
+ * Version 0.4.0
  * Repository https://github.com/yama-dev/js-scroll-module
  * Copyright yama-dev
  * Licensed MIT
