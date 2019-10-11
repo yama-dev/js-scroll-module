@@ -51,7 +51,7 @@ export class SCROLL_MODULE {
 
   _attachEvent(){
     DOM.addEvent(this.state.elem_array, 'click', (e)=>{
-      let _elem_target_data = e.currentTarget.getAttribute(this.state.elem_selector.replace(/(\[|\])/g,''));
+      let _elem_target_data = e.currentTarget.getAttribute(this.state.elem_selector.replace(/(\[|\]|\^|=|"|#)/g,''));
       let _elem_target_data_header = e.currentTarget.getAttribute('data-scroll-header');
       let _elem_target_data_offset = e.currentTarget.getAttribute('data-scroll-offset');
       let _elem_target_data_true_offset = e.currentTarget.getAttribute('data-scroll-true-offset');
@@ -145,8 +145,8 @@ export class SCROLL_MODULE {
     this._animeFunctionPrep(target, duration, header, offset, trueOffset);
   }
 
-  static easeOutQuart(elapsed, initialValue, amountOfChange, duration){
-    return -amountOfChange * ((elapsed = elapsed / duration - 1) * elapsed * elapsed * elapsed - 1) + initialValue;
+  static easeOutQuart(t, b, c, d){
+    return -c * ((t = t / d - 1) * t * t * t - 1) + b;
   }
 
   static easeOutCubic(t, b, c, d) {

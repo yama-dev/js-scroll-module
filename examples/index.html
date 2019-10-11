@@ -28,18 +28,20 @@
 <body>
 
 <div class="l-wrap">
-  <div class="p-top">
+  <div id="p-top" class="p-top">
     <p class="alert alert-secondary"> .p-top </p>
   </div>
-  <div class="p-mid">
+  <div id="p-mid" class="p-mid">
     <p class="alert alert-secondary"> .p-mid </p>
   </div>
-  <div class="p-btm">
+  <div id="p-btm" class="p-btm">
     <p class="alert alert-secondary"> .p-btm </p>
   </div>
 </div>
 
 <nav class="p-nav">
+  <p><a class="btn btn-secondary" href="#p-btm">#p-btm</a></p>
+  <p><a class="btn btn-secondary" href=".p-btm">.p-btm</a></p>
   <button type="button" class="btn btn-secondary" data-scroll=".p-top">.p-top</button>
   <button type="button" class="btn btn-secondary" data-scroll=".p-btm">.p-btm</button>
   <button type="button" class="btn btn-secondary" data-scroll=".p-mid" data-scroll-header=".p-nav">.p-mid +.p-nav</button>
@@ -54,15 +56,26 @@
 
 <script src="../dist/js-scroll-module.js"></script>
 <script>
-  var JSM = new SCROLL_MODULE('[data-scroll]', {
-    duration: 500,
-    easing: SCROLL_MODULE.easeOutQuart,
-    trueFunction: function(){
-      if(window.innerWidth <= 765){
-        return true;
-      }
+var JSM = new SCROLL_MODULE('[data-scroll]', {
+  duration: 500,
+  easing: SCROLL_MODULE.easeOutQuart,
+  trueFunction: function(){
+    if(window.innerWidth <= 765){
+      return true;
     }
-  });
+  }
+});
+</script>
+<script>
+var JSM = new SCROLL_MODULE('[href^="#"]', {
+  duration: 500,
+  easing: SCROLL_MODULE.easeOutQuart,
+  trueFunction: function(){
+    if(window.innerWidth <= 765){
+      return true;
+    }
+  }
+});
 </script>
 
 </body>
