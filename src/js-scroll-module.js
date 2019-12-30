@@ -13,7 +13,8 @@ export class SCROLL_MODULE {
         if(window.innerWidth <= 765){
           return true;
         }
-      }
+      },
+      onScrollEnd: ()=>{}
     };
 
     this.options = Object.assign(_options_default, options);
@@ -136,6 +137,7 @@ export class SCROLL_MODULE {
 
       if(duration <= this.state.numCountDuration){
         window.cancelAnimationFrame(this.instance);
+        this.options.onScrollEnd();
       }
     };
     loop();

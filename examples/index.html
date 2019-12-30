@@ -63,6 +63,9 @@ var JSM = new SCROLL_MODULE('[data-scroll]', {
     if(window.innerWidth <= 765){
       return true;
     }
+  },
+  onScrollEnd: function(){
+    console.log('onScrollEnd');
   }
 });
 </script>
@@ -74,6 +77,9 @@ var JSM = new SCROLL_MODULE('[href^="#"]', {
     if(window.innerWidth <= 765){
       return true;
     }
+  },
+  onScrollEnd: function(){
+    console.log('onScrollEnd');
   }
 });
 </script>
