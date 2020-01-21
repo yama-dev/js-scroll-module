@@ -52,6 +52,7 @@ export class SCROLL_MODULE {
 
   _attachEvent(){
     DOM.addEvent(this.state.elem_array, 'click', (e)=>{
+      e.preventDefault();
       let _elem_target_data = e.currentTarget.getAttribute(this.state.elem_selector.replace(/(\[|\]|\^|=|"|#)/g,''));
       let _elem_target_data_header = e.currentTarget.getAttribute('data-scroll-header');
       let _elem_target_data_offset = e.currentTarget.getAttribute('data-scroll-offset');
@@ -68,7 +69,8 @@ export class SCROLL_MODULE {
     this.state.numCountDuration = 0;     // used value at animation and easing functions.
     this.state.num_offset_frame_top = 0; // Distance to target.
 
-    if(!duration) duration = this.options.duration;
+    if(duration === false) duration = false;
+    if(duration < 0 || duration === null || duration === undefined) duration = this.options.duration;
 
     // Set target position.
     if(target){
@@ -140,7 +142,8 @@ export class SCROLL_MODULE {
         this.options.onScrollEnd();
       }
     };
-    loop();
+    if(duration == false || duration == 0) window.scrollTo(0, this.state.numTopTarget);
+    else loop();
   }
 
   anime(target=null,duration=null,header=null,offset=0,trueOffset=null){
