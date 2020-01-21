@@ -26,6 +26,9 @@
   "bugs": {
     "url": "https://github.com/yama-dev/js-scroll-module/issues"
   },
+  "dependencies": {
+    "@yama-dev/js-dom": "^0.1.1"
+  },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
@@ -84,8 +87,5 @@
       "no-console": "warn",
       "no-unused-vars": "warn"
     }
-  },
-  "dependencies": {
-    "@yama-dev/js-dom": "^0.1.0"
   }
 }
