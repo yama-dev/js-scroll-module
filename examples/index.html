@@ -41,17 +41,22 @@
 
 <nav class="p-nav">
   <p><a class="btn btn-secondary" href="#p-btm">#p-btm</a></p>
-  <p><a class="btn btn-secondary" href=".p-btm">.p-btm</a></p>
-  <button type="button" class="btn btn-secondary" data-scroll=".p-top">.p-top</button>
-  <button type="button" class="btn btn-secondary" data-scroll=".p-btm">.p-btm</button>
-  <button type="button" class="btn btn-secondary" data-scroll=".p-mid" data-scroll-header=".p-nav">.p-mid +.p-nav</button>
-  <button type="button" class="btn btn-secondary" data-scroll=".p-mid" data-scroll-offset="-100">.p-mid -100</button>
-  <button type="button" class="btn btn-secondary" data-scroll=".p-mid" data-scroll-offset="100">.p-mid +100</button>
-  <button type="button" class="btn btn-secondary" data-scroll=".p-mid" data-scroll-true-offset="-200">.p-mid true-offset -200</button>
-  <button type="button" class="btn btn-secondary" onclick="JSM.anime('.p-btm');">JSM.anime('.p-btm');</button>
-  <button type="button" class="btn btn-secondary" onclick="JSM.anime(300);">JSM.anime(300);</button>
-  <button type="button" class="btn btn-secondary" onclick="JSM.anime(1000, 3000);">JSM.anime(1000, 3000);</button>
-  <button type="button" class="btn btn-secondary" onclick="JSM.anime(1000, 3000, '.p-nav', 0, 0);">JSM.anime(1000, 3000, '.p-nav', 0, 0);</button>
+  <div>
+    <button type="button" class="btn btn-secondary" data-scroll=".p-top">.p-top</button>
+    <button type="button" class="btn btn-secondary" data-scroll=".p-btm">.p-btm</button>
+    <button type="button" class="btn btn-secondary" data-scroll=".p-mid" data-scroll-header=".p-nav">.p-mid +.p-nav</button>
+    <button type="button" class="btn btn-secondary" data-scroll=".p-mid" data-scroll-offset="-100">.p-mid -100</button>
+    <button type="button" class="btn btn-secondary" data-scroll=".p-mid" data-scroll-offset="100">.p-mid +100</button>
+    <button type="button" class="btn btn-secondary" data-scroll=".p-mid" data-scroll-true-offset="-200">.p-mid true-offset -200</button>
+  </div>
+  <div>
+    <button type="button" class="btn btn-secondary" onclick="JSM.anime('.p-btm');">JSM.anime('.p-btm');</button>
+    <button type="button" class="btn btn-secondary" onclick="JSM.anime(300);">JSM.anime(300);</button>
+    <button type="button" class="btn btn-secondary" onclick="JSM.anime(1000, 3000);">JSM.anime(1000, 3000);</button>
+    <button type="button" class="btn btn-secondary" onclick="JSM.anime(1000, 3000, '.p-nav', 0, 0);">JSM.anime(1000, 3000, '.p-nav', 0, 0);</button>
+    <button type="button" class="btn btn-secondary" onclick="JSM.anime('.p-btm', false);">JSM.anime('.p-btm', false);</button>
+    <button type="button" class="btn btn-secondary" onclick="JSM.anime('.p-btm', 0);">JSM.anime('.p-btm', 0);</button>
+  </div>
 </nav>
 
 <script src="../dist/js-scroll-module.js"></script>
