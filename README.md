@@ -16,7 +16,7 @@ It's a scroll utility.
 
 ## Installation,Download
 
-- Standalone(CDN) -> [https://cdn.jsdelivr.net/gh/yama-dev/js-scroll-module@v0.5.0/dist/js-scroll-module.js](https://cdn.jsdelivr.net/gh/yama-dev/js-scroll-module@v0.5.0/dist/js-scroll-module.js)
+- Standalone(CDN) -> [https://cdn.jsdelivr.net/gh/yama-dev/js-scroll-module@v0.6.0/dist/js-scroll-module.js](https://cdn.jsdelivr.net/gh/yama-dev/js-scroll-module@v0.6.0/dist/js-scroll-module.js)
 
 <br>
 
@@ -61,6 +61,8 @@ SCROLL_MODULE.anime('.target',3000);
 <button type="button" onclick="JSM.anime(300);">JSM.anime(300);</button>
 <button type="button" onclick="JSM.anime(1000, 3000);">JSM.anime(1000, 3000);</button>
 <button type="button" onclick="JSM.anime(1000, 3000, '.p-nav', 0, 0);">JSM.anime(1000, 3000, '.p-nav', 0, 0);</button>
+<button type="button" onclick="JSM.anime('.p-btm', 0);">JSM.anime('.p-btm', 0);</button>
+<button type="button" onclick="JSM.anime('.p-btm', false);">JSM.anime('.p-btm', false);</button>
 
 <script src="./js-scroll-module.js"></script>
 <script>
