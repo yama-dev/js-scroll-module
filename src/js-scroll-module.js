@@ -9,6 +9,8 @@ export class SCROLL_MODULE {
     let _options_default = {
       duration : 600,
       easing: SCROLL_MODULE.easeOutQuart,
+      offset: 0,
+      header: null,
       trueFunction: function(){
         if(window.innerWidth <= 765){
           return true;
@@ -54,8 +56,8 @@ export class SCROLL_MODULE {
     DOM.addEvent(this.state.elem_array, 'click', (e)=>{
       e.preventDefault();
       let _elem_target_data = e.currentTarget.getAttribute(this.state.elem_selector.replace(/(\[|\]|\^|=|"|#)/g,''));
-      let _elem_target_data_header = e.currentTarget.getAttribute('data-scroll-header');
-      let _elem_target_data_offset = e.currentTarget.getAttribute('data-scroll-offset');
+      let _elem_target_data_header = e.currentTarget.getAttribute('data-scroll-header') || this.options.header;
+      let _elem_target_data_offset = e.currentTarget.getAttribute('data-scroll-offset') || this.options.offset;
       let _elem_target_data_true_offset = e.currentTarget.getAttribute('data-scroll-true-offset');
       this._animeFunctionPrep(_elem_target_data, null, _elem_target_data_header, _elem_target_data_offset, _elem_target_data_true_offset);
     });
