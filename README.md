@@ -16,7 +16,7 @@ It's a scroll utility.
 
 ## Installation,Download
 
-- Standalone(CDN) -> [https://cdn.jsdelivr.net/gh/yama-dev/js-scroll-module@v0.6.0/dist/js-scroll-module.js](https://cdn.jsdelivr.net/gh/yama-dev/js-scroll-module@v0.6.0/dist/js-scroll-module.js)
+- Standalone(CDN) -> [https://cdn.jsdelivr.net/gh/yama-dev/js-scroll-module@v0.7.0/dist/js-scroll-module.js](https://cdn.jsdelivr.net/gh/yama-dev/js-scroll-module@v0.7.0/dist/js-scroll-module.js)
 
 <br>
 
@@ -66,14 +66,20 @@ SCROLL_MODULE.anime('.target',3000);
 
 <script src="./js-scroll-module.js"></script>
 <script>
-  var JSM = new SCROLL_MODULE('[data-scroll]', {
+  const JSM = new SCROLL_MODULE('[data-scroll]', {
     duration: 500,
     easing: SCROLL_MODULE.easeOutQuart,
+    offset: 0,
+    header: null,
+
     // data-scroll-true-offset=""
     trueFunction: function(){
       if(window.innerWidth <= 765){
         return true;
       }
+    },
+
+    onScrollEnd: function(){
     }
   });
 </script>
@@ -83,21 +89,7 @@ SCROLL_MODULE.anime('.target',3000);
 
 ## Dependencies
 
-'@yama-dev/js-dom'  // imoprt
-
-<br><br><br>
-
-___
-
-**For Developer**
-
-## Contribution
-
-1. Fork it ( https://github.com/yama-dev/js-scroll-module/fork )
-2. Create your feature branch (git checkout -b my-new-feature)
-3. Commit your changes (git commit -am 'Add some feature')
-4. Push to the branch (git push origin my-new-feature)
-5. Create new Pull Request
+'@yama-dev/js-dom'  // import
 
 <br>
 
