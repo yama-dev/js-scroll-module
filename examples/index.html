@@ -64,6 +64,8 @@
 var JSM = new SCROLL_MODULE('[data-scroll]', {
   duration: 500,
   easing: SCROLL_MODULE.easeOutQuart,
+  header: '.p-nav',
+  offset: 0,
   trueFunction: function(){
     if(window.innerWidth <= 765){
       return true;
